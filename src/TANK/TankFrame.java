@@ -5,6 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 
 //**  用双缓冲解决闪烁问题
@@ -12,7 +14,8 @@ public class TankFrame extends Frame {
     //此处将this 传入，表征这个TankFrame 实例化自己的引用，这样可以在
     // tank 内部进行其访问
     Tank mytank =new Tank(200,200,Dir.Down,this);
-    Bullet bullet = new Bullet(300,200,Dir.Down);
+    List<Bullet> bullets=new ArrayList<>();
+
     static final int Game_Width=800,Game_Height=600;
 
 
@@ -60,9 +63,25 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
+        Color c =g.getColor();
+        g.setColor(Color.BLACK);
+        g.drawString("子弹数量是:"+bullets.size(),10,60);
+        g.setColor(c);
         mytank.paint(g);
-        bullet.paint(g);
+        //使用迭代器进行删除操作，容易出现ConcurrentModificationException
+      /*  for (Bullet bullet : bullets) {
+            bullet.paint(g);
+        }*/
+
+        /**
+         * 使用迭代器遍历，进行删除问题，容易有CocurrentModificationException
+         *
+         */
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).paint(g);
         }
+
+    }
 //        x+=100;
 //        y+=100;
         /**

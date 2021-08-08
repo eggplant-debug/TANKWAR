@@ -66,7 +66,8 @@ public class Tank {
      * 只有在tankFrame中才能画对象
      */
     public void fire() {
-       tf.bullet= new Bullet(this.x,this.y,this.dir);
+        // 子弹如何进行remove掉
+        tf.bullets.add(new Bullet(this.x,this.y,this.dir,this.tf)) ;
 
 
     }
