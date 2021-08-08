@@ -33,6 +33,9 @@ public class Tank {
     }
 
     public void move(){
+        if (!this.move){
+            return;
+        }
         switch (dir){
             case Left:
                 x-=speed;
@@ -52,10 +55,23 @@ public class Tank {
         }
     }
     public void paint(Graphics g){
-        g.fillRect(x,y,60,60);
-        if (!this.move){
-            return;
+        switch (this.dir){
+            case Down:
+                g.drawImage(ResourceMgr.tankD,x,y,null);
+                break;
+            case Left:
+                g.drawImage(ResourceMgr.tankL,x,y,null);
+                break;
+            case Up:
+                g.drawImage(ResourceMgr.tankU,x,y,null);
+                break;
+            case Right:
+                g.drawImage(ResourceMgr.tankR,x,y,null);
+                break;
+
+
         }
+
         move();
 
 }

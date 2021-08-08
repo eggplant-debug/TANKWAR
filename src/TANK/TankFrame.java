@@ -64,7 +64,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         Color c =g.getColor();
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.drawString("子弹数量是:"+bullets.size(),10,60);
         g.setColor(c);
         mytank.paint(g);
