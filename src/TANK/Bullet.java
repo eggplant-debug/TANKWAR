@@ -7,8 +7,11 @@ public class Bullet {
     private int speed=10;
     private int x,y;
     private Dir Dir;
-    private int width=30;
-    private int height=30;
+    /**
+     * 如何正确获取子弹的长度和宽度
+     */
+    public static int width=ResourceMgr.BulletD.getWidth();
+    public static int height=ResourceMgr.BulletD.getHeight();
     private TankFrame tf;
     private boolean live=true;
 
@@ -24,11 +27,21 @@ public class Bullet {
         if (!live){
             tf.bullets.remove(this);
         }
+        switch (this.Dir){
+            case Down:
+                g.drawImage(ResourceMgr.BulletD,x,y,null);
+                break;
+            case Left:
+                g.drawImage(ResourceMgr.BulletL,x,y,null);
+                break;
+            case Up:
+                g.drawImage(ResourceMgr.BulletU,x,y,null);
+                break;
+            case Right:
+                g.drawImage(ResourceMgr.BulletR,x,y,null);
+                break;
 
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x,y,width,height);
-
+        }
         move();
     }
     public void move(){

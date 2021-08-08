@@ -50,7 +50,7 @@ public class TankFrame extends Frame {
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
         Color c =gOffScreen.getColor();
-        gOffScreen.setColor(Color.white);
+        gOffScreen.setColor(Color.BLACK);
         gOffScreen.fillRect(0,0,Game_Width,Game_Height);
         gOffScreen.setColor(c);
         paint(gOffScreen);
