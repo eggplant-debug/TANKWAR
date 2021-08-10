@@ -55,6 +55,7 @@ public class Tank {
 
     public void move(){
         if (!this.move){
+
             return;
         }
         switch (dir){
@@ -76,7 +77,10 @@ public class Tank {
         }
     }
     public void paint(Graphics g){
-        if(!living) return;
+        if(!living){
+            this.tf.enemys.remove(this);
+            return;
+        }
 
         switch (this.dir){
             case Down:
@@ -107,11 +111,12 @@ public class Tank {
     public void fire() {
         // 计算子弹的 位置
         int bx =this.x + Tank.width/2 -Bullet.width/2;
-        int by =this.x + Tank.height/2 -Bullet.height/2;
+        int by =this.y + Tank.height/2 -Bullet.height/2;
 
         // 子弹如何进行remove掉
         tf.bullets.add(new Bullet(bx,by,this.dir,this.tf)) ;
-
+        System.out.println(String.format("子弹的初始坐标是（%d,%d)", bx,by));
+        System.out.println(String.format("坦克当前的坐标是（%d,%d）",this.x,this.y));
 
     }
 

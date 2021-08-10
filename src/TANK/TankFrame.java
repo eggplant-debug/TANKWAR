@@ -73,9 +73,7 @@ public class TankFrame extends Frame {
             bullet.paint(g);
         }*/
 
-        for (int i = 0; i < enemys.size(); i++) {
-            enemys.get(i).paint(g);
-        }
+
 
         /**
          * 使用迭代器遍历，进行删除问题，容易有CocurrentModificationException
@@ -83,6 +81,10 @@ public class TankFrame extends Frame {
          */
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
+        }
+
+        for (int i = 0; i < enemys.size(); i++) {
+            enemys.get(i).paint(g);
         }
 
         for (int i = 0; i < bullets.size(); i++) {

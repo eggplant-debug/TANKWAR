@@ -26,6 +26,7 @@ public class Bullet {
     public void paint(Graphics g){
         if (!living){
             tf.bullets.remove(this);
+            return;
         }
         switch (this.Dir){
             case Down:
@@ -61,7 +62,7 @@ public class Bullet {
                 break;
 
         }
-        System.out.println(String.format("%d,%d", x,y));
+
 
         if (x<0||y<0||x>TankFrame.Game_Width||y>TankFrame.Game_Height){
             this.living =false;
