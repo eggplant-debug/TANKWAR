@@ -3,14 +3,32 @@ package TANK;
 import java.awt.*;
 
 public class Tank {
-    private int x,y;
+    private int x;
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    private int y;
     private Dir dir =Dir.Down;
     private static  int  speed =10;
     private boolean move = false;
     private TankFrame tf;//对象中可以持有另一个对象的引用
     public static int width=ResourceMgr.tankD.getWidth();
     public static int height=ResourceMgr.tankD.getHeight();
-
+    private boolean living = true;
 
     public boolean isMove() {
         return move;
@@ -58,6 +76,8 @@ public class Tank {
         }
     }
     public void paint(Graphics g){
+        if(!living) return;
+
         switch (this.dir){
             case Down:
                 g.drawImage(ResourceMgr.tankD,x,y,null);
@@ -95,4 +115,7 @@ public class Tank {
 
     }
 
+    public void die() {
+        this.living=false;
+    }
 }

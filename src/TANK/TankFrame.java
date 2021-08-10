@@ -15,7 +15,7 @@ public class TankFrame extends Frame {
     // tank 内部进行其访问
     Tank mytank =new Tank(200,200,Dir.Down,this);
     List<Bullet> bullets=new ArrayList<>();
-
+    List<Tank> enemys=new ArrayList<>();
     static final int Game_Width=800,Game_Height=600;
 
 
@@ -73,12 +73,22 @@ public class TankFrame extends Frame {
             bullet.paint(g);
         }*/
 
+        for (int i = 0; i < enemys.size(); i++) {
+            enemys.get(i).paint(g);
+        }
+
         /**
          * 使用迭代器遍历，进行删除问题，容易有CocurrentModificationException
          *
          */
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
+        }
+
+        for (int i = 0; i < bullets.size(); i++) {
+            for (int i1 = 0; i1 < enemys.size(); i1++) {
+                bullets.get(i).collideWith(enemys.get(i1));
+            }
         }
 
     }
@@ -181,6 +191,8 @@ public class TankFrame extends Frame {
 
         }
     }
-    }
+
+
+}
 
 
