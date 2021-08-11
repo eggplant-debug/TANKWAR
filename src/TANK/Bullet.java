@@ -7,6 +7,16 @@ public class Bullet {
     private int speed=10;
     private int x,y;
     private Dir Dir;
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    private Group group=Group.BAD;
     /**
      * 如何正确获取子弹的长度和宽度
      */
@@ -15,11 +25,12 @@ public class Bullet {
     private TankFrame tf;
     private boolean living =true;
 
-    public Bullet(int x, int y, TANK.Dir dir,TankFrame tf) {
+    public Bullet(int x, int y, TANK.Dir dir,TankFrame tf,Group group) {
         this.x = x;
         this.y = y;
         Dir = dir;
         this.tf=tf;
+        this.group=group;
 
     }
 
@@ -88,9 +99,11 @@ public class Bullet {
 
 
     public void collideWith(Tank tank){
+
+        //TODO:用一个rect来记录当前位置，此时每次都需要用一个new一个rect出来。
         Rectangle rect =new Rectangle(this.x,this.y,width,height);
         Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.width,Tank.height);
-        if(rect.intersects(rect2)){
+        if(rect.intersects(rect2) && tank.getGroup()!=this.group){
             tank.die();
             this.die();
         }

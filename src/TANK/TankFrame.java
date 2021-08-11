@@ -13,9 +13,10 @@ import java.util.List;
 public class TankFrame extends Frame {
     //此处将this 传入，表征这个TankFrame 实例化自己的引用，这样可以在
     // tank 内部进行其访问
-    Tank mytank =new Tank(200,200,Dir.Down,this);
+    Tank mytank =new Tank(200,200,Dir.Down,this,Group.GOOD);
     List<Bullet> bullets=new ArrayList<>();
     List<Tank> enemys=new ArrayList<>();
+    Explode explode =new Explode(100,100,this);
     static final int Game_Width=800,Game_Height=600;
 
 
@@ -92,6 +93,7 @@ public class TankFrame extends Frame {
                 bullets.get(i).collideWith(enemys.get(i1));
             }
         }
+        explode.paint(g);
 
     }
 //        x+=100;

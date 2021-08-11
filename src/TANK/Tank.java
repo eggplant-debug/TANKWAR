@@ -1,6 +1,7 @@
 package TANK;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Tank {
     private int x;
@@ -23,12 +24,23 @@ public class Tank {
 
     private int y;
     private Dir dir =Dir.Down;
-    private static  int  speed =10;
-    private boolean move = false;
+    private static  int  speed =1;
+    private boolean move = true;
     private TankFrame tf;//对象中可以持有另一个对象的引用
     public static int width=ResourceMgr.tankD.getWidth();
     public static int height=ResourceMgr.tankD.getHeight();
     private boolean living = true;
+    private Random random = new Random();
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    private Group group=Group.BAD;
 
     public boolean isMove() {
         return move;
@@ -38,11 +50,12 @@ public class Tank {
         this.move = move;
     }
 
-    public Tank(int x, int y, Dir dir,TankFrame tf) {
+    public Tank(int x, int y, Dir dir,TankFrame tf,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf=tf;
+        this.group = group;
     }
 
     public Dir getDir() {
@@ -72,9 +85,8 @@ public class Tank {
                 y+=speed;
                 break;
 
-            default:
-                break;
         }
+        if(random.nextInt(10)>1) this.fire();
     }
     public void paint(Graphics g){
         if(!living){
@@ -114,7 +126,7 @@ public class Tank {
         int by =this.y + Tank.height/2 -Bullet.height/2;
 
         // 子弹如何进行remove掉
-        tf.bullets.add(new Bullet(bx,by,this.dir,this.tf)) ;
+        tf.bullets.add(new Bullet(bx,by,this.dir,this.tf,this.group)) ;
         System.out.println(String.format("子弹的初始坐标是（%d,%d)", bx,by));
         System.out.println(String.format("坦克当前的坐标是（%d,%d）",this.x,this.y));
 

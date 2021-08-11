@@ -5,7 +5,7 @@ public class main {
         TankFrame  t = new TankFrame();
         //由错误
         for(int i=0;i<5;i++){
-            t.enemys.add(new Tank(50+i*100,200,Dir.Down,t));
+            t.enemys.add(new Tank(50+i*100,200,Dir.Down,t,Group.BAD));
         }
 
 
