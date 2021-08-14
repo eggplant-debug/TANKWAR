@@ -14,10 +14,15 @@ public class ResourceMgr {
      */
     static {
         try{
-            tankL= ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("img/tankL.gif"));
-            tankD= ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("img/tankD.gif"));
-            tankU= ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("img/tankU.gif"));
-            tankR= ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("img/tankR.gif"));
+            tankU= ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("img/GoodTank1.png"));
+            tankD= ImageUtil.rotateImage(tankU,180);
+            tankL= ImageUtil.rotateImage(tankU,270);
+            tankR= ImageUtil.rotateImage(tankU,90);
+
+
+
+
+
 
             /*
             子弹相关的图片
@@ -27,6 +32,10 @@ public class ResourceMgr {
             BulletD=ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("img/bulletD.gif"));
             BulletU=ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("img/bulletU.gif"));
 
+
+            /*
+            在explodes 中在增加一系列图片，表示爆炸的
+             */
             for (int i = 0; i < explodes.length; i++) {
                 explodes[i]=ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("img/e"+(i+1)+".gif"));
             }

@@ -16,7 +16,7 @@ public class TankFrame extends Frame {
     Tank mytank =new Tank(200,200,Dir.Down,this,Group.GOOD);
     List<Bullet> bullets=new ArrayList<>();
     List<Tank> enemys=new ArrayList<>();
-    Explode explode =new Explode(100,100,this);
+    List<Explode> explodes = new ArrayList<>();
     static final int Game_Width=800,Game_Height=600;
 
 
@@ -67,6 +67,8 @@ public class TankFrame extends Frame {
         Color c =g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("子弹数量是:"+bullets.size(),10,60);
+        g.drawString("敌人的数量是"+enemys.size(),10,80);
+        g.drawString("爆炸的数量是："+explodes.size(),10, 100);
         g.setColor(c);
         mytank.paint(g);
         //使用迭代器进行删除操作，容易出现ConcurrentModificationException
@@ -88,12 +90,16 @@ public class TankFrame extends Frame {
             enemys.get(i).paint(g);
         }
 
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
+        }
+
         for (int i = 0; i < bullets.size(); i++) {
             for (int i1 = 0; i1 < enemys.size(); i1++) {
-                bullets.get(i).collideWith(enemys.get(i1));
+                bullets.get(i).collideWith(enemys.get(i1),g);
             }
         }
-        explode.paint(g);
+
 
     }
 //        x+=100;

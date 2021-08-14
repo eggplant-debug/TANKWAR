@@ -98,7 +98,7 @@ public class Bullet {
     }
 
 
-    public void collideWith(Tank tank){
+    public void collideWith(Tank tank,Graphics g){
 
         //TODO:用一个rect来记录当前位置，此时每次都需要用一个new一个rect出来。
         Rectangle rect =new Rectangle(this.x,this.y,width,height);
@@ -106,6 +106,9 @@ public class Bullet {
         if(rect.intersects(rect2) && tank.getGroup()!=this.group){
             tank.die();
             this.die();
+            this.tf.explodes.add(new Explode(this.x,this.y,this.tf));
+
+
         }
     }
 
