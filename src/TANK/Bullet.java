@@ -7,6 +7,8 @@ public class Bullet {
     private int speed=10;
     private int x,y;
     private Dir Dir;
+    private Rectangle rectangle =new Rectangle();
+
 
     public Group getGroup() {
         return group;
@@ -31,7 +33,10 @@ public class Bullet {
         Dir = dir;
         this.tf=tf;
         this.group=group;
-
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width=Bullet.width;
+        rectangle.height=Bullet.height;
     }
 
     public void paint(Graphics g){
@@ -73,6 +78,8 @@ public class Bullet {
                 break;
 
         }
+        rectangle.x = this.x;
+        rectangle.y = this.y;
 
 
         if (x<0||y<0||x>TankFrame.Game_Width||y>TankFrame.Game_Height){
@@ -98,15 +105,16 @@ public class Bullet {
     }
 
 
-    public void collideWith(Tank tank,Graphics g){
+    public void collideWith(Tank tank){
 
         //TODO:用一个rect来记录当前位置，此时每次都需要用一个new一个rect出来。
-        Rectangle rect =new Rectangle(this.x,this.y,width,height);
-        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.width,Tank.height);
-        if(rect.intersects(rect2) && tank.getGroup()!=this.group){
+
+        if(this.rectangle.intersects(tank.getRectangle()) && tank.getGroup()!=this.group){
             tank.die();
             this.die();
-            this.tf.explodes.add(new Explode(this.x,this.y,this.tf));
+            int ex =this.x + Tank.width/2 -Explode.WIDTH/2;
+            int ey =this.y + Tank.height/2 -Explode.HEIGHT/2;
+            this.tf.explodes.add(new Explode(ex,ey,this.tf));
 
 
         }

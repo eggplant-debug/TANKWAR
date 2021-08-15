@@ -5,6 +5,27 @@ import java.util.Random;
 
 public class Tank {
     private int x;
+    private int y;
+    private Dir dir =Dir.Down;
+    private static  int  speed =10;
+    private boolean move = true;
+    private TankFrame tf;//对象中可以持有另一个对象的引用
+    public static int width=ResourceMgr.GoodtankD.getWidth();
+    public static int height=ResourceMgr.GoodtankD.getHeight();
+    private boolean living = true;
+    private Random random = new Random();
+    private  Rectangle rectangle = new Rectangle();
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
+
+
+
 
     public int getX() {
         return x;
@@ -22,15 +43,6 @@ public class Tank {
         this.y = y;
     }
 
-    private int y;
-    private Dir dir =Dir.Down;
-    private static  int  speed =1;
-    private boolean move = true;
-    private TankFrame tf;//对象中可以持有另一个对象的引用
-    public static int width=ResourceMgr.tankD.getWidth();
-    public static int height=ResourceMgr.tankD.getHeight();
-    private boolean living = true;
-    private Random random = new Random();
 
     public Group getGroup() {
         return group;
@@ -56,6 +68,10 @@ public class Tank {
         this.dir = dir;
         this.tf=tf;
         this.group = group;
+        rectangle.x = this.x;
+        rectangle.y =this.y;
+        rectangle.height=Tank.height;
+        rectangle.width =Tank.width;
     }
 
     public Dir getDir() {
@@ -86,8 +102,27 @@ public class Tank {
                 break;
 
         }
-        if(random.nextInt(10)>1) this.fire();
+        if(this.group == Group.BAD && random.nextInt(100)>95) this.fire();
+        if(this.group == Group.BAD && random.nextInt(10)>7)
+            randomDir();
+
+        boundsCheck();
+        rectangle.x = this.x;
+        rectangle.y =this.y;
     }
+
+    private void boundsCheck() {
+        if(this.x<0) x=0;
+        if (this.y<30) y=30;
+        if(this.x>TankFrame.Game_Width-Tank.width-2) x=TankFrame.Game_Width-Tank.width;
+        if(this.y>TankFrame.Game_Height-Tank.height-2)y =TankFrame.Game_Height-Tank.height;
+    }
+
+    private void randomDir() {
+
+        this.dir = Dir.values()[random.nextInt(4)];
+    }
+
     public void paint(Graphics g){
         if(!living){
             this.tf.enemys.remove(this);
@@ -96,16 +131,17 @@ public class Tank {
 
         switch (this.dir){
             case Down:
-                g.drawImage(ResourceMgr.tankD,x,y,null);
+                // 正常判断 ，我会写if else了，可以学习一下这里的高明写法
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.GoodtankD: ResourceMgr.BadtankD ,x,y,null);
                 break;
             case Left:
-                g.drawImage(ResourceMgr.tankL,x,y,null);
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.GoodtankL: ResourceMgr.BadtankL ,x,y,null);
                 break;
             case Up:
-                g.drawImage(ResourceMgr.tankU,x,y,null);
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.GoodtankU: ResourceMgr.BadtankU ,x,y,null);
                 break;
             case Right:
-                g.drawImage(ResourceMgr.tankR,x,y,null);
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.GoodtankR: ResourceMgr.BadtankR ,x,y,null);
                 break;
 
 
