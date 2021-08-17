@@ -157,21 +157,32 @@ public class TankFrame extends Frame {
         @Override
         public void keyReleased(KeyEvent e) {
             int key =e.getKeyCode();
-            switch (key){
+            switch (key) {
                 case KeyEvent.VK_DOWN:
-                    bD =false;
+                    bD = false;
                     break;
                 case KeyEvent.VK_UP:
-                    bU=false;
+                    bU = false;
                     break;
                 case KeyEvent.VK_LEFT:
-                    bl=false;
+                    bl = false;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    bR=false;
+                    bR = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    mytank.fire();
+                    String goodFSname = (String) PropertyMgr.get("goodFS");
+                    FireStrategy fs = null;
+                    try {
+                        fs = (FireStrategy) Class.forName(goodFSname).newInstance();
+                    } catch (ClassNotFoundException classNotFoundException) {
+                        classNotFoundException.printStackTrace();
+                    } catch (IllegalAccessException illegalAccessException) {
+                        illegalAccessException.printStackTrace();
+                    } catch (InstantiationException instantiationException) {
+                        instantiationException.printStackTrace();
+                    }
+                    mytank.fire(fs);
                 default:
                     break;
             }

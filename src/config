@@ -4,3 +4,6 @@ tanksSpeed=5
 bulletSpeed=10
 gameWidth=800
 gameHeight = 600
+#fireStrategy
+goodFS=com.forMsb.TANK.FourDirFireStrategy
+badFS=com.forMsb.TANK.DefaultFireStrategy

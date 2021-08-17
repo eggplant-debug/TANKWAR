@@ -6,15 +6,17 @@ import java.util.Random;
 public class Tank {
     private int x;
     private int y;
-    private Dir dir =Dir.Down;
+    public Dir dir =Dir.Down;
     private static  int  speed =10;
     private boolean move = true;
-    private TankFrame tf;//对象中可以持有另一个对象的引用
+    public TankFrame tf;//对象中可以持有另一个对象的引用
     public static int width=ResourceMgr.GoodtankD.getWidth();
     public static int height=ResourceMgr.GoodtankD.getHeight();
     private boolean living = true;
     private Random random = new Random();
     private  Rectangle rectangle = new Rectangle();
+    public Group group=Group.BAD;
+
 
     public Rectangle getRectangle() {
         return rectangle;
@@ -52,7 +54,7 @@ public class Tank {
         this.group = group;
     }
 
-    private Group group=Group.BAD;
+
 
     public boolean isMove() {
         return move;
@@ -102,7 +104,7 @@ public class Tank {
                 break;
 
         }
-        if(this.group == Group.BAD && random.nextInt(100)>95) this.fire();
+        if(this.group == Group.BAD && random.nextInt(100)>95) this.fire(DefaultFireStrategy.getInstance());
         if(this.group == Group.BAD && random.nextInt(10)>7)
             randomDir();
 
@@ -156,15 +158,17 @@ public class Tank {
      *
      * 只有在tankFrame中才能画对象
      */
-    public void fire() {
-        // 计算子弹的 位置
-        int bx =this.x + Tank.width/2 -Bullet.width/2;
-        int by =this.y + Tank.height/2 -Bullet.height/2;
 
-        // 子弹如何进行remove掉
-        tf.bullets.add(new Bullet(bx,by,this.dir,this.tf,this.group)) ;
-        System.out.println(String.format("子弹的初始坐标是（%d,%d)", bx,by));
-        System.out.println(String.format("坦克当前的坐标是（%d,%d）",this.x,this.y));
+    /**
+     * 通过策略模式实现fire 后，要考虑如何传参的问题，
+     * 1. 通过参数将strategy传入
+     *          缺点：需要先new 一个FireStrategy 才能传
+     *          优点：限制属性的作用域范围
+     *          能用传参数就用传参数
+     * 2. 通过成员变量的方式，
+     */
+    public void fire(FireStrategy fireStrategy) {
+        fireStrategy.fire(this);
 
     }
 

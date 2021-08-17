@@ -17,8 +17,6 @@ public class main {
              */
             //初始化地方坦克
 
-
-
             Thread.sleep(50);
             t.repaint();
         }
